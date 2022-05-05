@@ -11,6 +11,9 @@ def create_app():
     # Instancia de Flask
     app = Flask(__name__)
 
+    # Configuramos la app en CORS
+    CORS(app)
+
     # Configuración de variables de entorno
     app.config.from_mapping(
         SECRET_KEY=os.environ.get('SECRET_KEY'),
@@ -20,9 +23,11 @@ def create_app():
         DATABASE_PASSWORD=os.environ.get('FLASK_DATABASE_PASSWORD'),
     )
 
-    CORS(app)
+    # Iniciamos la base de datos con la app
+    # TODO: Iniciarlizar base de datos
 
     # Función de prueba
+
     @app.route('/hola')
     def hola():
         return {
