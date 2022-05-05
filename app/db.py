@@ -23,3 +23,10 @@ def get_db():  # Función que nos devuelve la base de datos
         g.c = g.db.cursor(dictionary=True)
     # Retornamos la base de datos y su cursor
     return g.db, g.c
+
+
+def close_db(e=None):  # Función que cierra la conexión de base de datos con un evento None
+    # Sacamos el atributo de la base de datos de g
+    db = g.pop('db', None)
+    if db is not None:
+        db.close()
