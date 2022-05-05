@@ -42,3 +42,13 @@ def init_db():  # Función que ejecuta todas las instrucciones del archivo schem
     # c.execute(i)
     # Comprometemos las instrucciones para que se ejecuten en la base de datos
     db.commit()
+
+
+@click.command('init-db')
+# Habilitamos que el script pueda usar las variables de entorno
+@with_appcontext
+def init_db_command():  # Función que inicializa la base de datos desde consola
+    # Llamada a función de sentencias SQL
+    init_db()
+    # Mostramos un mensaje de funcionamiento
+    click.echo("Base de datos inicializada")
