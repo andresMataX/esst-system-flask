@@ -41,3 +41,12 @@ def login_required(view):
         # Devolvemos la vista envuelta
         return view(**kwargs)
     return wrapped_view
+
+
+@bp.route('/logout')
+# Función de cierre de sesión de un usuario
+def logout():
+    # Limpiamos la sesión del usuario
+    session.clear()
+    # Redirigimos al usuario a la pantalla de inicio de sesión
+    return redirect(url_for('auth.login'))
