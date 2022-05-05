@@ -29,3 +29,15 @@ def load_logged_in_user():
         )
         # Retornamos el primer y único elemento encontrado
         g.user = c.fetchone()
+
+
+def login_required(view):
+    # Función que protege las rutas recibiendo un inicio de sesión que ya está siendo decorada con esta función decoradora
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        # Verificamos que el usuario haya iniciado sesión
+        if g.user is None:
+            return redirect(url_for('auth.login'))
+        # Devolvemos la vista envuelta
+        return view(**kwargs)
+    return wrapped_view
