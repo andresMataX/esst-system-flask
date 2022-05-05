@@ -30,3 +30,15 @@ def close_db(e=None):  # Función que cierra la conexión de base de datos con u
     db = g.pop('db', None)
     if db is not None:
         db.close()
+
+
+def init_db():  # Función que ejecuta todas las instrucciones del archivo schema.py
+    # Obtenemos la base de datos
+    db, c = get_db()
+    # Iteramos las instrucciones
+    # TODO: Habilitar ciclo For con instrucciones y execute
+    # for i in instructions:
+    # Ejecutamos las sentencias SQL
+    # c.execute(i)
+    # Comprometemos las instrucciones para que se ejecuten en la base de datos
+    db.commit()
