@@ -5,7 +5,7 @@ import click
 from flask import current_app, g
 from flask.cli import with_appcontext
 # Instrucciones para crear la base de datos
-# TODO: crear achivo schema para las instrucciones de creación de base de datos
+from .schema import instructions
 
 
 def get_db():  # Función que nos devuelve la base de datos
@@ -17,7 +17,8 @@ def get_db():  # Función que nos devuelve la base de datos
             database=current_app.config['DATABASE'],
             host=current_app.config['DATABASE_HOST'],
             user=current_app.config['DATABASE_USER'],
-            password=current_app.config['DATABASE_PASSWORD']
+            password=current_app.config['DATABASE_PASSWORD'],
+            auth_plugin='mysql_native_password'
         )
         # Obtención del cursor de la base de datos
         g.c = g.db.cursor(dictionary=True)
@@ -36,10 +37,9 @@ def init_db():  # Función que ejecuta todas las instrucciones del archivo schem
     # Obtenemos la base de datos
     db, c = get_db()
     # Iteramos las instrucciones
-    # TODO: Habilitar ciclo For con instrucciones y execute
-    # for i in instructions:
-    # Ejecutamos las sentencias SQL
-    # c.execute(i)
+    for i in instructions:
+        # Ejecutamos las sentencias SQL
+        c.execute(i)
     # Comprometemos las instrucciones para que se ejecuten en la base de datos
     db.commit()
 

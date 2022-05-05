@@ -4,7 +4,7 @@ import os
 from flask import Flask
 # Solucionar problema de CORS al llamar al backend desde frontend de otro hosting
 from flask_cors import CORS
-# TODO: Agregar archivo de base de datos
+from . import db
 
 
 def create_app():
@@ -24,7 +24,7 @@ def create_app():
     )
 
     # Iniciamos la base de datos con la app
-    # TODO: Iniciarlizar base de datos
+    db.init_app(app)
 
     # Suscribimos el Blueprint auth a la app
     # TODO: Suscribir los blueprints de la app
