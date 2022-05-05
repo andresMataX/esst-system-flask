@@ -9,3 +9,23 @@ from app.db import get_db
 
 # Creamos el blueprint de autenticación
 bp = Blueprint('auth', __name__, url_prefix='/auth')
+
+# TODO: función de login
+
+
+# Función decoradora para asignar la sesión del usuario ya loggeado a g
+@bp.before_app_request
+def load_logged_in_user():
+    # Obtenemos el user_id que guardamos al iniciar la sesión del usuario
+    user_id = session.get('user_id')
+    if user_id is None:
+        # Debemos asignarle None, ya que no tenemos un usuario que haya iniciado sesión
+        g.user = None
+    else:
+        # Buscamos el usuario por su ID en la base de datos y se lo asignamos a g.user
+        db, c = get_db()
+        c.execute(
+            'SELECT * FROM usuario WHERE id = %s', (user_id,)
+        )
+        # Retornamos el primer y único elemento encontrado
+        g.user = c.fetchone()
