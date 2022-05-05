@@ -26,7 +26,8 @@ def create_app():
     # Iniciamos la base de datos con la app
     # TODO: Iniciarlizar base de datos
 
-    # Función de prueba
+    # Suscribimos el Blueprint auth a la app
+    # TODO: Suscribir los blueprints de la app
 
     @app.route('/hola')
     def hola():
