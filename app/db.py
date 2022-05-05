@@ -52,3 +52,10 @@ def init_db_command():  # Función que inicializa la base de datos desde consola
     init_db()
     # Mostramos un mensaje de funcionamiento
     click.echo("Base de datos inicializada")
+
+
+def init_app(app):  # Función que se encarga de cerrar la base de datos después de cada petición
+    # Método que se llama tras cada endpoint del servidor
+    app.teardown_appcontext(close_db)
+    # Suscribimos el comando de init_db_command a la app
+    app.cli.add_command(init_db_command)
