@@ -29,6 +29,7 @@ def create_app():
     # Suscribimos el Blueprint auth a la app
     from . import auth
     app.register_blueprint(auth.bp)
+    # TODO: Suscribir al blueprint esst
 
     @app.route('/hola')
     def hola():
