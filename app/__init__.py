@@ -11,9 +11,6 @@ def create_app():
     # Instancia de Flask
     app = Flask(__name__)
 
-    # Configuramos la app en CORS
-    CORS(app)
-
     # Configuración de variables de entorno
     app.config.from_mapping(
         SECRET_KEY=os.environ.get('SECRET_KEY'),
@@ -38,6 +35,9 @@ def create_app():
             "Hola": 1452,
             "Pepe": "Cómo te va?"
         }
+
+    # Configuramos la app en CORS
+    CORS(app)
 
     # Retornamos la app
     return app

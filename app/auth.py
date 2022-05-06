@@ -69,9 +69,9 @@ def login():
     # Verificamos el método enviado
     if request.method == 'POST':
         # Recuperamos el usuario enviado desde el formulario
-        username = request.form['user']
+        username = request.json['user']
         # Recuperamos la contraseña enviada desde el formulario
-        password = request.form['pass']
+        password = request.json['pass']
         # Instancia de base de datos
         db, c = get_db()
         # Variable que guarda los mensajes de error
