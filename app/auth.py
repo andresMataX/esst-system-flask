@@ -59,7 +59,7 @@ def register():
             "error": error
         }
     return {
-        "uwu": "uwu"
+        "ruta": "Register"
     }
 
 
@@ -106,7 +106,7 @@ def login():
                 "error": error
             }
     return {
-        "pepe": "uwu"
+        "ruta": "Login"
     }
 
 
