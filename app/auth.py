@@ -11,6 +11,58 @@ from app.db import get_db
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 
+# Ruta de registro de usuario
+@bp.route('/register', methods=['GET', 'POST'])
+# Función que registra usuarios a la base de datos
+def register():
+    if request.method == 'POST':
+        # Recuperamos el usuario enviado en el formulario
+        username = request.form['user']
+        # Recuperamos la contraseña enviada en el formulario
+        password = request.form['pass']
+        # Instancia de la base de datos
+        db, c = get_db()
+        # Variable que almacena los errores provocados por el usuario
+        error = None
+        # Validamos que el usuario no exista
+
+        # Validamos que se haya ingresado un usuario
+        if not username:
+            error = 'Se requiere de un nombre de usuario para registrarse.'
+        else:
+            c.execute(
+                # Buscamos el ID del usuario que ha sido ingresado
+                'SELECT id FROM usuario WHERE user = %s', (username,)
+            )
+
+        # Validamos que se haya ingresado una contraseña
+        if not password:
+            error = 'Se requiere de una contraseña para registrarse.'
+        elif c.fetchone() is not None:
+            # Se coloca el usuario {} con format
+            error = 'El usuario {} ya se encuentra registrado'.format(username)
+
+        # Validamos que no hayamos tenido mensajes de error
+        if error is None:
+            # Registramos al usuario con su contraseña
+            c.execute(
+                'INSERT INTO usuario(user, pass) VALUES (%s, %s)',
+                # Encriptamos la contraseña
+                (username, generate_password_hash(password))
+            )
+            # Comprometemos la base de datos
+            db.commit()
+            return {
+                "error": "false"
+            }
+        return {
+            "error": error
+        }
+    return {
+        "ruta": "Register"
+    }
+
+
 @bp.route('/login', methods=['GET', 'POST'])
 # Ruta para que un usuario se inicie sesión
 def login():
@@ -36,10 +88,9 @@ def login():
             # Mensaje de error que no determina cuál campo es el incorrecto
             error = 'Usuario y/o Contraseña inválida'
         # Verificamos que la contraseña sea la correcta
-        # TODO: Crear la función que registre por URL
-        # elif not check_password_hash(user['pass'], password):
-        #     # Mensaje de error que no determina cuál campo es el incorrecto
-        #     error = 'Usuario y/o Contraseña inválida'
+        elif not check_password_hash(user['pass'], password):
+            # Mensaje de error que no determina cuál campo es el incorrecto
+            error = 'Usuario y/o Contraseña inválida'
 
         # Verificamos que no hayamos tenido algún error
         if error is None:
@@ -55,7 +106,7 @@ def login():
                 "error": error
             }
     return {
-        "pepe": "uwu"
+        "ruta": "Login"
     }
 
 
