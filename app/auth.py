@@ -10,7 +10,53 @@ from app.db import get_db
 # Creamos el blueprint de autenticación
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
-# TODO: función de login
+
+@bp.route('/login', methods=['GET', 'POST'])
+# Ruta para que un usuario se inicie sesión
+def login():
+    # Verificamos el método enviado
+    if request.method == 'POST':
+        # Recuperamos el usuario enviado desde el formulario
+        username = request.form['user']
+        # Recuperamos la contraseña enviada desde el formulario
+        password = request.form['pass']
+        # Instancia de base de datos
+        db, c = get_db()
+        # Variable que guarda los mensajes de error
+        error = None
+        # Buscamos al usuario y contraseña
+        c.execute(
+            'SELECT * FROM usuario WHERE user = %s', (username,)
+        )
+        # Obtenemos el primer y único resultado obtenido
+        user = c.fetchone()
+
+        # Verificamos que el usuario exista
+        if user is None:
+            # Mensaje de error que no determina cuál campo es el incorrecto
+            error = 'Usuario y/o Contraseña inválida'
+        # Verificamos que la contraseña sea la correcta
+        # TODO: Crear la función que registre por URL
+        # elif not check_password_hash(user['pass'], password):
+        #     # Mensaje de error que no determina cuál campo es el incorrecto
+        #     error = 'Usuario y/o Contraseña inválida'
+
+        # Verificamos que no hayamos tenido algún error
+        if error is None:
+            # Limpiamos una sesión, le asignamos un ID a la sesión y lo redirigimos a la página principal
+            session.clear()
+            # Creamos una variable en la sesión con el ID que tiene el usuario en la base de datos
+            session['user_id'] = user['id']
+            return {
+                "error": "false"
+            }
+        else:
+            return {
+                "error": error
+            }
+    return {
+        "pepe": "uwu"
+    }
 
 
 # Función decoradora para asignar la sesión del usuario ya loggeado a g
