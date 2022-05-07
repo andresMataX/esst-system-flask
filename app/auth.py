@@ -53,7 +53,8 @@ def register():
             # Comprometemos la base de datos
             db.commit()
             return {
-                "error": "false"
+                "estatus": "ok",
+                "retro": "El usuario se ha registrado correctamente"
             }
         return {
             "error": error
@@ -99,7 +100,8 @@ def login():
             # Creamos una variable en la sesión con el ID que tiene el usuario en la base de datos
             session['user_id'] = user['id']
             return {
-                "error": "false"
+                "estatus": "ok",
+                "retro": "Has iniciado sesión correctamente"
             }
         else:
             return {

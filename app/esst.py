@@ -47,7 +47,8 @@ def create():
             db.commit()
             # Redirigimos al usuario al listado de ToDos
             return {
-                "estatus": "El cliente ha sido registrado exitosamente"
+                "estatus": "ok",
+                "retro": "El cliente ha sido registrado exitosamente"
             }
     return {
         "ruta": "/create/venta"
