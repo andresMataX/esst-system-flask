@@ -6,6 +6,7 @@ instructions = [
     'DROP TABLE IF EXISTS Venta;',
     'DROP TABLE IF EXISTS Coste;',
     'DROP TABLE IF EXISTS Producto;',
+    'DROP TABLE IF EXISTS Transaccion;',
     'SET FOREIGN_KEY_CHECKS=1;',
     # Creación de tablas
     """
@@ -50,6 +51,13 @@ instructions = [
         date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(id_pro_type) REFERENCES Producto(id),
         FOREIGN KEY(id_user) REFERENCES Usuario(id)
+    );
+    """,
+    """
+    CREATE TABLE Transaccion(
+			id INT PRIMARY KEY AUTO_INCREMENT,
+            tran_price INT,
+            tran_type INT
     );
     """,
     'INSERT INTO Producto(prod_name, prod_price) VALUES("Tinte", 48)',

@@ -43,7 +43,13 @@ CREATE TABLE Coste(
             FOREIGN KEY(id_pro_type) REFERENCES Producto(id),
             FOREIGN KEY(id_user) REFERENCES Usuario(id)
         );
-        
+
+CREATE TABLE Transaccion(
+			id INT PRIMARY KEY AUTO_INCREMENT,
+            tran_price INT,
+            tran_type INT
+		);
+
 -- Datos necesarios por default
 -- Tipo de producto
 INSERT INTO Producto(prod_name, prod_price) VALUES ("Tinte", 48);
