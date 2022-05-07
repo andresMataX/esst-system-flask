@@ -6,7 +6,7 @@ INSERT INTO Corte(cut_name, cut_price) VALUES ("Caballero", 60);
 -- Producto
 INSERT INTO Producto(prod_name, prod_price) VALUES ("Tinte", 50);
 -- Reinicio de IDs
-ALTER TABLE producto AUTO_INCREMENT = 1;
+ALTER TABLE corte AUTO_INCREMENT = 0;
 
 -------------- Pruebas
 -- Venta

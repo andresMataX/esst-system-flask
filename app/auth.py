@@ -97,49 +97,16 @@ def login():
         if error is None:
             # Limpiamos una sesión, le asignamos un ID a la sesión y lo redirigimos a la página principal
             session.clear()
-            # Creamos una variable en la sesión con el ID que tiene el usuario en la base de datos
-            session['user_id'] = user['id']
             return {
                 "estatus": "ok",
                 "retro": "Has iniciado sesión correctamente"
             }
-        else:
-            return {
-                "error": error
-            }
+        return {
+            "error": error
+        }
     return {
         "ruta": "Login"
     }
-
-
-# Función decoradora para asignar la sesión del usuario ya loggeado a g
-@bp.before_app_request
-def load_logged_in_user():
-    # Obtenemos el user_id que guardamos al iniciar la sesión del usuario
-    user_id = session.get('user_id')
-    if user_id is None:
-        # Debemos asignarle None, ya que no tenemos un usuario que haya iniciado sesión
-        g.user = None
-    else:
-        # Buscamos el usuario por su ID en la base de datos y se lo asignamos a g.user
-        db, c = get_db()
-        c.execute(
-            'SELECT * FROM usuario WHERE id = %s', (user_id,)
-        )
-        # Retornamos el primer y único elemento encontrado
-        g.user = c.fetchone()
-
-
-def login_required(view):
-    # Función que protege las rutas recibiendo un inicio de sesión que ya está siendo decorada con esta función decoradora
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        # Verificamos que el usuario haya iniciado sesión
-        if g.user is None:
-            return redirect(url_for('auth.login'))
-        # Devolvemos la vista envuelta
-        return view(**kwargs)
-    return wrapped_view
 
 
 @bp.route('/logout')

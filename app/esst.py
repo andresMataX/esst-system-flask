@@ -15,7 +15,6 @@ bp = Blueprint('esst', __name__)
 
 @bp.route('/create/venta', methods=['GET', 'POST'])
 # El usuario debe haber iniciado sesión
-@login_required
 def create():
     # Revisar si usamos el método de POST
     if request.method == 'POST':
