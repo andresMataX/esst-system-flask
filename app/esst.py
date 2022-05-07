@@ -12,8 +12,6 @@ from app.db import get_db
 # Creamos el blueprint de inventory
 bp = Blueprint('esst', __name__)
 
-# Función de todo.create
-
 
 @bp.route('/create/venta', methods=['GET', 'POST'])
 # El usuario debe haber iniciado sesión
@@ -22,9 +20,9 @@ def create():
     # Revisar si usamos el método de POST
     if request.method == 'POST':
         # Sacamos la descripción desde el formulario
-        name_cli = request.form['name_cli']
-        l_name_cli = request.form['l_name_cli']
-        id_cut_type = request.form['id_cut_type']
+        name_cli = request.json['name_cli']
+        l_name_cli = request.json['l_name_cli']
+        id_cut_type = request.json['id_cut_type']
         error = None
         # Preguntaremos si no existe una descripción
         if not name_cli:
