@@ -17,9 +17,9 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 def register():
     if request.method == 'POST':
         # Recuperamos el usuario enviado en el formulario
-        username = request.form['user']
-        # Recuperamos la contraseña enviada en el formulario
-        password = request.form['pass']
+        username = request.json['user']
+        # Recuperamos la contraseña enviada en el json
+        password = request.json['pass']
         # Instancia de la base de datos
         db, c = get_db()
         # Variable que almacena los errores provocados por el usuario
@@ -53,7 +53,8 @@ def register():
             # Comprometemos la base de datos
             db.commit()
             return {
-                "error": "false"
+                "estatus": "ok",
+                "retro": "El usuario se ha registrado correctamente"
             }
         return {
             "error": error
@@ -99,7 +100,8 @@ def login():
             # Creamos una variable en la sesión con el ID que tiene el usuario en la base de datos
             session['user_id'] = user['id']
             return {
-                "error": "false"
+                "estatus": "ok",
+                "retro": "Has iniciado sesión correctamente"
             }
         else:
             return {

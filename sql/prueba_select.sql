@@ -3,6 +3,7 @@ SELECT * from producto;
 SELECT * from corte;
 SELECT * from coste;
 SELECT * from venta;
+SELECT * from transaccion;
 
 -- Prueba de filtro por día 
 SELECT * from venta WHERE date LIKE "%-06 %";

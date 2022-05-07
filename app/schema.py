@@ -6,6 +6,7 @@ instructions = [
     'DROP TABLE IF EXISTS Venta;',
     'DROP TABLE IF EXISTS Coste;',
     'DROP TABLE IF EXISTS Producto;',
+    'DROP TABLE IF EXISTS Transaccion;',
     'SET FOREIGN_KEY_CHECKS=1;',
     # Creación de tablas
     """
@@ -17,16 +18,16 @@ instructions = [
     """,
     """
     CREATE TABLE Corte(
-        id INT PRIMARY KEY AUTO_INCREMENT,
-        cut_name VARCHAR(15) NOT NULL,
-        cut_price INT NOT NULL
+			id INT PRIMARY KEY AUTO_INCREMENT,
+            cut_name VARCHAR(40) NOT NULL,
+            cut_price INT NOT NULL
     );
     """,
     """
     CREATE TABLE Venta(
         id INT PRIMARY KEY AUTO_INCREMENT,
-        name_cli VARCHAR(15) NOT NULL,
-        l_name_cli VARCHAR(15) NOT NULL,
+        name_cli VARCHAR(30) NOT NULL,
+        l_name_cli VARCHAR(30) NOT NULL,
         id_cut_type INT NOT NULL,
         id_user INT NOT NULL,
         date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -37,19 +38,43 @@ instructions = [
     """
     CREATE TABLE Producto(
         id INT PRIMARY KEY AUTO_INCREMENT,
-        prod_name VARCHAR(15) NOT NULL,
+        prod_name VARCHAR(40) NOT NULL,
         prod_price INT NOT NULL
     );
     """,
     """
     CREATE TABLE Coste(
         id INT PRIMARY KEY AUTO_INCREMENT,
-        name_cost VARCHAR(15) NOT NULL,
+        name_cost VARCHAR(40) NOT NULL,
         id_pro_type INT NOT NULL,
         id_user INT NOT NULL,
         date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(id_pro_type) REFERENCES Producto(id),
         FOREIGN KEY(id_user) REFERENCES Usuario(id)
     );
+    """,
     """
+    CREATE TABLE Transaccion(
+			id INT PRIMARY KEY AUTO_INCREMENT,
+            tran_price INT,
+            tran_type INT
+    );
+    """,
+    'INSERT INTO Producto(prod_name, prod_price) VALUES("Tinte", 48)',
+    'INSERT INTO Producto(prod_name, prod_price) VALUES("Gorros de procesamiento", 320)',
+    'INSERT INTO Producto(prod_name, prod_price) VALUES("Delantal", 230)',
+    'INSERT INTO Producto(prod_name, prod_price) VALUES("Sillón reclinable hidráulico", 3899)',
+    'INSERT INTO Producto(prod_name, prod_price) VALUES("Máquinas de corte", 365)',
+    'INSERT INTO Producto(prod_name, prod_price) VALUES("Tijeras", 314)',
+    'INSERT INTO Producto(prod_name, prod_price) VALUES("Gel", 25)',
+    'INSERT INTO Producto(prod_name, prod_price) VALUES("Talco", 56)',
+    'INSERT INTO Producto(prod_name, prod_price) VALUES("Capa", 89)',
+    'INSERT INTO Producto(prod_name, prod_price) VALUES("Plancha", 494)',
+    'INSERT INTO Producto(prod_name, prod_price) VALUES("Horquillas", 290)',
+    'INSERT INTO Producto(prod_name, prod_price) VALUES("Cepillos", 550)',
+    'INSERT INTO Producto(prod_name, prod_price) VALUES("Tazones", 101)',
+    'INSERT INTO Producto(prod_name, prod_price) VALUES("Secador de cabello", 330)',
+    'INSERT INTO Producto(prod_name, prod_price) VALUES("Plancha para rizado", 371)',
+    'INSERT INTO Producto(prod_name, prod_price) VALUES("Plancha para alisado", 494)',
+    'INSERT INTO Producto(prod_name, prod_price) VALUES ("Toallas para mano", 217);'
 ]
