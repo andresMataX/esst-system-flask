@@ -17,9 +17,9 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 def register():
     if request.method == 'POST':
         # Recuperamos el usuario enviado en el formulario
-        username = request.form['user']
-        # Recuperamos la contraseña enviada en el formulario
-        password = request.form['pass']
+        username = request.json['user']
+        # Recuperamos la contraseña enviada en el json
+        password = request.json['pass']
         # Instancia de la base de datos
         db, c = get_db()
         # Variable que almacena los errores provocados por el usuario
