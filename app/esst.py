@@ -5,13 +5,13 @@ from flask import (
 from werkzeug.exceptions import abort
 # Importamos la base de datos
 from app.db import get_db
+from datetime import datetime
 
 # Creamos el blueprint de inventory
 bp = Blueprint('esst', __name__)
 
 
 @bp.route('/create/venta', methods=['GET', 'POST'])
-# El usuario debe haber iniciado sesión
 def create_cliente():
     # Revisar si usamos el método de POST
     if request.method == 'POST':
@@ -54,6 +54,30 @@ def create_cliente():
             }
     return {
         "ruta": "/create/venta"
+    }
+
+
+@bp.route('/read/clientes')
+def read_clientes():
+    db, c = get_db()
+    c.execute(
+        'SELECT * FROM Venta'
+    )
+    clientes = c.fetchall()
+    # print(clientes[0]['date'].strftime('%d-%m-%Y %I:%M%p'))
+    print(clientes[0]['date'].strftime('%m'))
+    return {
+        "id": clientes[0]['id'],
+        "name_cli": clientes[0]['name_cli'],
+        "l_name_cli": clientes[0]['l_name_cli'],
+        "id_cut_type": clientes[0]['id_cut_type'],
+        "id_tran": clientes[0]['id_tran'],
+        "date": clientes[0]['date'].strftime('%I:%M%p %d-%m-%Y'),
+        "year": clientes[0]['date'].strftime('%Y'),
+        "month": clientes[0]['date'].strftime('%m'),
+        "day": clientes[0]['date'].strftime('%d'),
+        "hour": clientes[0]['date'].strftime('%I%p'),
+        "minute": clientes[0]['date'].strftime('%M')
     }
 
 
