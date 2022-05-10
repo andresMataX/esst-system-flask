@@ -24,15 +24,22 @@ instructions = [
     );
     """,
     """
+    CREATE TABLE Transaccion(
+			id INT PRIMARY KEY AUTO_INCREMENT,
+            tran_price INT,
+            tran_type INT
+    );
+    """,
+    """
     CREATE TABLE Venta(
         id INT PRIMARY KEY AUTO_INCREMENT,
         name_cli VARCHAR(30) NOT NULL,
         l_name_cli VARCHAR(30) NOT NULL,
         id_cut_type INT NOT NULL,
-        id_user INT NOT NULL,
+        id_tran INT NOT NULL UNIQUE,
         date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(id_cut_type) REFERENCES Corte(id),
-        FOREIGN KEY(id_user) REFERENCES Usuario(id)
+        FOREIGN KEY(id_tran) REFERENCES Transaccion(id)
     );
     """,
     """
@@ -47,17 +54,10 @@ instructions = [
         id INT PRIMARY KEY AUTO_INCREMENT,
         name_cost VARCHAR(40) NOT NULL,
         id_pro_type INT NOT NULL,
-        id_user INT NOT NULL,
+        id_tran INT NOT NULL UNIQUE,
         date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(id_pro_type) REFERENCES Producto(id),
-        FOREIGN KEY(id_user) REFERENCES Usuario(id)
-    );
-    """,
-    """
-    CREATE TABLE Transaccion(
-			id INT PRIMARY KEY AUTO_INCREMENT,
-            tran_price INT,
-            tran_type INT
+        FOREIGN KEY(id_tran) REFERENCES Transaccion(id)
     );
     """,
     'INSERT INTO Producto(prod_name, prod_price) VALUES("Tinte", 48)',
@@ -76,5 +76,12 @@ instructions = [
     'INSERT INTO Producto(prod_name, prod_price) VALUES("Secador de cabello", 330)',
     'INSERT INTO Producto(prod_name, prod_price) VALUES("Plancha para rizado", 371)',
     'INSERT INTO Producto(prod_name, prod_price) VALUES("Plancha para alisado", 494)',
-    'INSERT INTO Producto(prod_name, prod_price) VALUES ("Toallas para mano", 217);'
+    'INSERT INTO Producto(prod_name, prod_price) VALUES ("Toallas para mano", 217);',
+    'INSERT INTO Corte(cut_name, cut_price) VALUES ("Caballero", 70);',
+    'INSERT INTO Corte(cut_name, cut_price) VALUES ("Infantil", 60);',
+    'INSERT INTO Corte(cut_name, cut_price) VALUES ("Dama", 90);',
+    'INSERT INTO Corte(cut_name, cut_price) VALUES ("Peinado", 100);',
+    'INSERT INTO Corte(cut_name, cut_price) VALUES ("Tinte", 500);',
+    'INSERT INTO Corte(cut_name, cut_price) VALUES ("Alaciado", 1000);',
+    'INSERT INTO Corte(cut_name, cut_price) VALUES ("Baño de color", 600);'
 ]
