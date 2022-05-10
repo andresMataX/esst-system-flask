@@ -163,6 +163,18 @@ def read_productos():
     }
 
 
+@bp.route('/read/transacciones')
+def read_transacciones():
+    db, c = get_db()
+    c.execute(
+        'SELECT * FROM Transaccion;'
+    )
+    transacciones = c.fetchall()
+    return {
+        "transacciones": transacciones
+    }
+
+
 def get_price_corte(id):
     db, c = get_db()
     c.execute(
