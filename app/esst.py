@@ -169,15 +169,25 @@ def read_clientes():
     # "minute": clientes[0]['date'].strftime('%M')
     '''
     return {
-        "clientes": 'pepe'
+        "clientes": clientes
     }
 
 
-@bp.route('/read/costes')
+@bp.route('/read/costes', methods=['GET', 'POST'])
 def read_costes():
     db, c = get_db()
+    if request.method == 'POST':
+        name_cost = request.json['name_cost']
+        c.execute(
+            'SELECT * from Coste WHERE name_cost LIKE %s;',
+            ("%"+name_cost+"%",)
+        )
+        filtro = c.fetchall()
+        return {
+            "filtro": filtro
+        }
     c.execute(
-        'SELECT c.id, c.name_cost, c.id_pro_type, c.date, p.prod_name FROM Coste c '
+        'SELECT c.id, c.name_cost, c.id_pro_type, c.date, p.prod_name, p.prod_price FROM Coste c '
         'JOIN Producto p ON c.id_pro_type = p.id ORDER BY c.date desc'
     )
     costes = c.fetchall()

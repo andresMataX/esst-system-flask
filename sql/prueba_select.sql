@@ -8,7 +8,7 @@ SELECT * from transaccion;
 -- Prueba de filtro por día 
 SELECT * from venta WHERE date LIKE "%-10 %";
 -- Prueba de filtro por mes
-SELECT * from venta WHERE date LIKE "%-06-%";
+SELECT * from venta WHERE date LIKE "%-5-%";
 -- Prueba de filtro por año
 SELECT * from venta WHERE date LIKE "%5-%";
 
