@@ -114,6 +114,9 @@ def read_clientes():
                 ("%"+date+"%",)
             )
             filtro_date = c.fetchall()
+            for i in range(len(filtro_date)):
+                filtro_date[i]['date'] = filtro_date[i]['date'].strftime(
+                    '%I:%M%p %d-%m-%Y')
             return {
                 "filtro": filtro_date
             }
@@ -123,6 +126,9 @@ def read_clientes():
                 ("%"+"-"+day+" "+"%",)
             )
             filtro_day = c.fetchall()
+            for i in range(len(filtro_day)):
+                filtro_day[i]['date'] = filtro_day[i]['date'].strftime(
+                    '%I:%M%p %d-%m-%Y')
             return {
                 "filtro": filtro_day
             }
@@ -133,6 +139,9 @@ def read_clientes():
                 ("%"+"-"+month+"-"+"%",)
             )
             filtro_month = c.fetchall()
+            for i in range(len(filtro_month)):
+                filtro_month[i]['date'] = filtro_month[i]['date'].strftime(
+                    '%I:%M%p %d-%m-%Y')
             return {
                 "filtro": filtro_month
             }
@@ -143,6 +152,9 @@ def read_clientes():
                 ("%"+year+"-"+"%",)
             )
             filtro_year = c.fetchall()
+            for i in range(len(filtro_year)):
+                filtro_year[i]['date'] = filtro_year[i]['date'].strftime(
+                    '%I:%M%p %d-%m-%Y')
             return {
                 "filtro": filtro_year
             }
@@ -153,7 +165,7 @@ def read_clientes():
         'SELECT v.id, v.name_cli, v.l_name_cli, v.id_cut_type, v.date, c.cut_name FROM Venta v '
         'JOIN Corte c ON v.id_cut_type = c.id ORDER BY v.date desc'
     )
-    clientes = c.fetchall()
+    filtro_date = c.fetchall()
     '''
     # print(clientes[0]['date'].strftime('%d-%m-%Y %I:%M%p'))
     # "id": fetch[0]['id'],
@@ -168,10 +180,11 @@ def read_clientes():
     # "hour": clientes[0]['date'].strftime('%I%p'),
     # "minute": clientes[0]['date'].strftime('%M')
     '''
-    for i in range(len(clientes)):
-        clientes[i]['date'] = clientes[i]['date'].strftime('%I:%M%p %d-%m-%Y')
+    for i in range(len(filtro_date)):
+        filtro_date[i]['date'] = filtro_date[i]['date'].strftime(
+            '%I:%M%p %d-%m-%Y')
     return {
-        "clientes": clientes
+        "clientes": filtro_date
     }
 
 
