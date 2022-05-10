@@ -168,6 +168,8 @@ def read_clientes():
     # "hour": clientes[0]['date'].strftime('%I%p'),
     # "minute": clientes[0]['date'].strftime('%M')
     '''
+    for i in range(len(clientes)):
+        clientes[i]['date'] = clientes[i]['date'].strftime('%I:%M%p %d-%m-%Y')
     return {
         "clientes": clientes
     }
@@ -193,7 +195,6 @@ def read_costes():
     costes = c.fetchall()
     for i in range(len(costes)):
         costes[i]['date'] = costes[i]['date'].strftime('%I:%M%p %d-%m-%Y')
-        print(costes)
     return {
         "costes": costes
     }
