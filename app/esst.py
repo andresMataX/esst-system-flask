@@ -41,6 +41,12 @@ def create_cliente():
             )
             # Comprometemos la base de datos
             db.commit()
+            price = get_price_corte(id_cut_type)
+            c.execute(
+                'INSERT INTO Transaccion(tran_price, tran_type) VALUES (%s, %s);',
+                (price['cut_price'], 0)
+            )
+            db.commit()
             # Redirigimos al usuario al listado de ToDos
             return {
                 "estatus": "ok",
@@ -49,3 +55,13 @@ def create_cliente():
     return {
         "ruta": "/create/venta"
     }
+
+
+def get_price_corte(id):
+    db, c = get_db()
+    c.execute(
+        'SELECT cut_price FROM Corte WHERE id = %s',
+        (id,)
+    )
+    price = c.fetchone()
+    return price
