@@ -79,3 +79,6 @@ INSERT INTO Corte(cut_name, cut_price) VALUES ("Peinado", 700);
 INSERT INTO Corte(cut_name, cut_price) VALUES ("Tinte", 500);
 INSERT INTO Corte(cut_name, cut_price) VALUES ("Alaciado", 1000);
 INSERT INTO Corte(cut_name, cut_price) VALUES ("Baño de color", 600);
+
+-- Usuarios
+INSERT INTO Usuario(user, pass) VALUES ("andre", "qwe");

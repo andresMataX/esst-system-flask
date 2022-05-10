@@ -12,6 +12,9 @@ SELECT * from venta WHERE date LIKE "%-5-%";
 -- Prueba de filtro por año
 SELECT * from venta WHERE date LIKE "%5-%";
 
+-- Prueba obtención de producto por nombre
+SELECT * from Coste WHERE name_cost LIKE "%Tin%";
+
 SELECT cut_price FROM Corte WHERE id = 1;
 
 -- Obtención del último id registrado en una tabla
