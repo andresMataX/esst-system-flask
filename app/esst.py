@@ -191,6 +191,9 @@ def read_costes():
         'JOIN Producto p ON c.id_pro_type = p.id ORDER BY c.date desc'
     )
     costes = c.fetchall()
+    for i in range(len(costes)):
+        costes[i]['date'] = costes[i]['date'].strftime('%I:%M%p %d-%m-%Y')
+        print(costes)
     return {
         "costes": costes
     }
