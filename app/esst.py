@@ -99,8 +99,22 @@ def create_coste():
     }
 
 
-@bp.route('/read/clientes')
+@bp.route('/read/clientes', methods=['GET', 'POST'])
 def read_clientes():
+    if request.method == 'POST':
+        date = request.json['date']
+        db, c = get_db()
+        c.execute(
+            'SELECT v.id, v.name_cli, v.l_name_cli, v.id_cut_type, v.date, c.cut_name FROM Venta v '
+            'JOIN Corte c ON v.id_cut_type = c.id WHERE v.date LIKE %s ORDER BY v.date desc',
+            ("%"+date+"%",)
+        )
+        filtro = c.fetchall()
+        return {
+            "filtro": filtro
+        }
+
+    # Si el cliente no manda nada en el buscador
     db, c = get_db()
     c.execute(
         'SELECT v.id, v.name_cli, v.l_name_cli, v.id_cut_type, v.date, c.cut_name FROM Venta v '
