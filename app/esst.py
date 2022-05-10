@@ -103,16 +103,49 @@ def create_coste():
 def read_clientes():
     if request.method == 'POST':
         date = request.json['date']
+        day = request.json['day']
+        month = request.json['month']
+        year = request.json['year']
         db, c = get_db()
-        c.execute(
-            'SELECT v.id, v.name_cli, v.l_name_cli, v.id_cut_type, v.date, c.cut_name FROM Venta v '
-            'JOIN Corte c ON v.id_cut_type = c.id WHERE v.date LIKE %s ORDER BY v.date desc',
-            ("%"+date+"%",)
-        )
-        filtro = c.fetchall()
-        return {
-            "filtro": filtro
-        }
+        if len(date) != 0:
+            c.execute(
+                'SELECT v.id, v.name_cli, v.l_name_cli, v.id_cut_type, v.date, c.cut_name FROM Venta v '
+                'JOIN Corte c ON v.id_cut_type = c.id WHERE v.date LIKE %s ORDER BY v.date desc;',
+                ("%"+date+"%",)
+            )
+            filtro_date = c.fetchall()
+            return {
+                "filtro": filtro_date
+            }
+        if len(day) != 0:
+            c.execute(
+                'SELECT v.id, v.name_cli, v.l_name_cli, v.id_cut_type, v.date, c.cut_name FROM Venta v JOIN Corte c ON v.id_cut_type = c.id WHERE v.date LIKE %s ORDER BY v.date desc;',
+                ("%"+"-"+day+" "+"%",)
+            )
+            filtro_day = c.fetchall()
+            return {
+                "filtro": filtro_day
+            }
+        if len(month) != 0:
+            c.execute(
+                'SELECT v.id, v.name_cli, v.l_name_cli, v.id_cut_type, v.date, c.cut_name FROM Venta v '
+                'JOIN Corte c ON v.id_cut_type = c.id WHERE v.date LIKE %s ORDER BY v.date desc;',
+                ("%"+"-"+month+"-"+"%",)
+            )
+            filtro_month = c.fetchall()
+            return {
+                "filtro": filtro_month
+            }
+        if len(year) != 0:
+            c.execute(
+                'SELECT v.id, v.name_cli, v.l_name_cli, v.id_cut_type, v.date, c.cut_name FROM Venta v '
+                'JOIN Corte c ON v.id_cut_type = c.id WHERE v.date LIKE %s ORDER BY v.date desc;',
+                ("%"+year+"-"+"%",)
+            )
+            filtro_year = c.fetchall()
+            return {
+                "filtro": filtro_year
+            }
 
     # Si el cliente no manda nada en el buscador
     db, c = get_db()
@@ -136,7 +169,7 @@ def read_clientes():
     # "minute": clientes[0]['date'].strftime('%M')
     '''
     return {
-        "clientes": clientes
+        "clientes": 'pepe'
     }
 
 
