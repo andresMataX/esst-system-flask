@@ -66,18 +66,19 @@ def read_clientes():
     )
     clientes = c.fetchall()
     # print(clientes[0]['date'].strftime('%d-%m-%Y %I:%M%p'))
+    # "id": fetch[0]['id'],
+    # "name_cli": fetch[0]['name_cli'],
+    # "l_name_cli": fetch[0]['l_name_cli'],
+    # "cut_name": fetch[0]['cut_name'],
+    # "id_tran": fetch[0]['id_tran'],
+    # "date": fetch[0]['date'].strftime('%I:%M%p %d-%m-%Y')
+    # "year": clientes[0]['date'].strftime('%Y'),
+    # "month": clientes[0]['date'].strftime('%m'),
+    # "day": clientes[0]['date'].strftime('%d'),
+    # "hour": clientes[0]['date'].strftime('%I%p'),
+    # "minute": clientes[0]['date'].strftime('%M')
     return {
-        "id": clientes[0]['id'],
-        "name_cli": clientes[0]['name_cli'],
-        "l_name_cli": clientes[0]['l_name_cli'],
-        "cut_name": clientes[0]['cut_name'],
-        "id_tran": clientes[0]['id_tran'],
-        "date": clientes[0]['date'].strftime('%I:%M%p %d-%m-%Y')
-        # "year": clientes[0]['date'].strftime('%Y'),
-        # "month": clientes[0]['date'].strftime('%m'),
-        # "day": clientes[0]['date'].strftime('%d'),
-        # "hour": clientes[0]['date'].strftime('%I%p'),
-        # "minute": clientes[0]['date'].strftime('%M')
+        "clientes": clientes
     }
 
 
