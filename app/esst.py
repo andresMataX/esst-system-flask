@@ -57,14 +57,57 @@ def create_cliente():
     }
 
 
+@bp.route('/create/coste', methods=['GET', 'POST'])
+def create_coste():
+    # Revisar si usamos el método de POST
+    if request.method == 'POST':
+        # Sacamos la descripción desde el formulario
+        name_cost = request.json['name_cost']
+        id_pro_type = request.json['id_pro_type']
+        error = None
+        # Preguntaremos si no existe una descripción
+        if not name_cost:
+            error = 'El nombre del producto es requerido.'
+        if not id_pro_type:
+            error = 'El tipo del producto es requerido.'
+        # Preguntamos si tenemos un mensaje de erro
+        if error is not None:
+            return {
+                "error": error
+            }
+        else:
+            db, c = get_db()
+            price = get_price_producto(id_pro_type)
+            c.execute(
+                'INSERT INTO Transaccion(tran_price, tran_type) VALUES (%s, %s);',
+                (price['prod_price'], 1)
+            )
+            db.commit()
+            c.execute(
+                'INSERT INTO Coste(name_cost, id_pro_type, id_tran) VALUES (%s, %s, %s);',
+                (name_cost, id_pro_type, get_transaction())
+            )
+            # Comprometemos la base de datos
+            db.commit()
+            # Redirigimos al usuario al listado de ToDos
+            return {
+                "estatus": "ok",
+                "retro": "El producto ha sido registrado exitosamente"
+            }
+    return {
+        "ruta": "/create/coste"
+    }
+
+
 @bp.route('/read/clientes')
 def read_clientes():
     db, c = get_db()
     c.execute(
-        'SELECT v.id, v.name_cli, v.l_name_cli, v.id_cut_type, v.id_tran, v.date, c.cut_name FROM Venta v '
+        'SELECT v.id, v.name_cli, v.l_name_cli, v.id_cut_type, v.date, c.cut_name FROM Venta v '
         'JOIN Corte c ON v.id_cut_type = c.id ORDER BY v.date'
     )
     clientes = c.fetchall()
+    '''
     # print(clientes[0]['date'].strftime('%d-%m-%Y %I:%M%p'))
     # "id": fetch[0]['id'],
     # "name_cli": fetch[0]['name_cli'],
@@ -77,13 +120,27 @@ def read_clientes():
     # "day": clientes[0]['date'].strftime('%d'),
     # "hour": clientes[0]['date'].strftime('%I%p'),
     # "minute": clientes[0]['date'].strftime('%M')
+    '''
     return {
         "clientes": clientes
     }
 
 
+@bp.route('/read/costes')
+def read_costes():
+    db, c = get_db()
+    c.execute(
+        'SELECT c.id, c.name_cost, c.id_pro_type, c.date, p.prod_name FROM Coste c '
+        'JOIN Producto p ON c.id_pro_type = p.id ORDER BY c.date'
+    )
+    costes = c.fetchall()
+    return {
+        "costes": costes
+    }
+
+
 @bp.route('/read/cortes')
-def read_corte():
+def read_cortes():
     db, c = get_db()
     c.execute(
         'SELECT * FROM Corte;'
@@ -94,10 +151,44 @@ def read_corte():
     }
 
 
+@bp.route('/read/productos')
+def read_productos():
+    db, c = get_db()
+    c.execute(
+        'SELECT * FROM Producto;'
+    )
+    producto = c.fetchall()
+    return {
+        "producto": producto
+    }
+
+
+@bp.route('/read/transacciones')
+def read_transacciones():
+    db, c = get_db()
+    c.execute(
+        'SELECT * FROM Transaccion;'
+    )
+    transacciones = c.fetchall()
+    return {
+        "transacciones": transacciones
+    }
+
+
 def get_price_corte(id):
     db, c = get_db()
     c.execute(
         'SELECT cut_price FROM Corte WHERE id = %s',
+        (id,)
+    )
+    price = c.fetchone()
+    return price
+
+
+def get_price_producto(id):
+    db, c = get_db()
+    c.execute(
+        'SELECT prod_price FROM Producto WHERE id = %s',
         (id,)
     )
     price = c.fetchone()
