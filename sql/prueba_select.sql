@@ -11,3 +11,7 @@ SELECT * from venta WHERE date LIKE "%-06 %";
 SELECT * from venta WHERE date LIKE "%-06-%";
 
 SELECT cut_price FROM Corte WHERE id = 1;
+
+-- Obtención del último id registrado en una tabla
+SELECT @@identity AS id FROM transaccion;
+SELECT MAX(id) AS id FROM transaccion;

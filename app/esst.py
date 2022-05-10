@@ -35,17 +35,17 @@ def create_cliente():
         else:
             # Podemos crear nuestro ToDo
             db, c = get_db()
-            c.execute(
-                'INSERT INTO Venta(name_cli, l_name_cli, id_cut_type) VALUES (%s, %s, %s);',
-                (name_cli, l_name_cli, id_cut_type)
-            )
-            # Comprometemos la base de datos
-            db.commit()
             price = get_price_corte(id_cut_type)
             c.execute(
                 'INSERT INTO Transaccion(tran_price, tran_type) VALUES (%s, %s);',
                 (price['cut_price'], 0)
             )
+            db.commit()
+            c.execute(
+                'INSERT INTO Venta(name_cli, l_name_cli, id_cut_type, id_tran) VALUES (%s, %s, %s, %s);',
+                (name_cli, l_name_cli, id_cut_type, get_transaction())
+            )
+            # Comprometemos la base de datos
             db.commit()
             # Redirigimos al usuario al listado de ToDos
             return {
@@ -65,3 +65,12 @@ def get_price_corte(id):
     )
     price = c.fetchone()
     return price
+
+
+def get_transaction():
+    db, c = get_db()
+    c.execute(
+        'SELECT MAX(id) AS id FROM transaccion;'
+    )
+    ids = c.fetchone()
+    return ids['id']
