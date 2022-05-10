@@ -24,13 +24,22 @@ instructions = [
     );
     """,
     """
+    CREATE TABLE Transaccion(
+			id INT PRIMARY KEY AUTO_INCREMENT,
+            tran_price INT,
+            tran_type INT
+    );
+    """,
+    """
     CREATE TABLE Venta(
         id INT PRIMARY KEY AUTO_INCREMENT,
         name_cli VARCHAR(30) NOT NULL,
         l_name_cli VARCHAR(30) NOT NULL,
         id_cut_type INT NOT NULL,
+        id_tran INT NOT NULL UNIQUE,
         date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY(id_cut_type) REFERENCES Corte(id)
+        FOREIGN KEY(id_cut_type) REFERENCES Corte(id),
+        FOREIGN KEY(id_tran) REFERENCES Transaccion(id)
     );
     """,
     """
@@ -45,15 +54,10 @@ instructions = [
         id INT PRIMARY KEY AUTO_INCREMENT,
         name_cost VARCHAR(40) NOT NULL,
         id_pro_type INT NOT NULL,
+        id_tran INT NOT NULL UNIQUE,
         date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY(id_pro_type) REFERENCES Producto(id)
-    );
-    """,
-    """
-    CREATE TABLE Transaccion(
-			id INT PRIMARY KEY AUTO_INCREMENT,
-            tran_price INT,
-            tran_type INT
+        FOREIGN KEY(id_pro_type) REFERENCES Producto(id),
+        FOREIGN KEY(id_tran) REFERENCES Transaccion(id)
     );
     """,
     'INSERT INTO Producto(prod_name, prod_price) VALUES("Tinte", 48)',

@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS Corte;
 DROP TABLE IF EXISTS Venta;
 DROP TABLE IF EXISTS Coste;
 DROP TABLE IF EXISTS Producto;
+DROP TABLE IF EXISTS Transaccion;
 SET FOREIGN_KEY_CHECKS=1;
 CREATE TABLE Usuario(
             id INT PRIMARY KEY AUTO_INCREMENT,
@@ -17,13 +18,21 @@ CREATE TABLE Corte(
             cut_price INT NOT NULL
 		);
 
+CREATE TABLE Transaccion(
+			id INT PRIMARY KEY AUTO_INCREMENT,
+            tran_price INT,
+            tran_type INT
+		);
+
 CREATE TABLE Venta(
 			id INT PRIMARY KEY AUTO_INCREMENT,
             name_cli VARCHAR(30) NOT NULL,
             l_name_cli VARCHAR(30) NOT NULL,
             id_cut_type INT NOT NULL,
+            id_tran INT NOT NULL UNIQUE,
             date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY(id_cut_type) REFERENCES Corte(id)
+            FOREIGN KEY(id_cut_type) REFERENCES Corte(id),
+            FOREIGN KEY(id_tran) REFERENCES Transaccion(id)
         );
         
 CREATE TABLE Producto(
@@ -36,15 +45,11 @@ CREATE TABLE Coste(
 			id INT PRIMARY KEY AUTO_INCREMENT,
             name_cost VARCHAR(40) NOT NULL,
             id_pro_type INT NOT NULL,
+            id_tran INT NOT NULL UNIQUE,
             date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY(id_pro_type) REFERENCES Producto(id)
+            FOREIGN KEY(id_pro_type) REFERENCES Producto(id),
+            FOREIGN KEY(id_tran) REFERENCES Transaccion(id)
         );
-
-CREATE TABLE Transaccion(
-			id INT PRIMARY KEY AUTO_INCREMENT,
-            tran_price INT,
-            tran_type INT
-		);
 
 -- Datos necesarios por default
 -- Tipo de producto
