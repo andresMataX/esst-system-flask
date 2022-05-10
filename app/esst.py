@@ -57,6 +57,48 @@ def create_cliente():
     }
 
 
+@bp.route('/create/coste', methods=['GET', 'POST'])
+def create_coste():
+    # Revisar si usamos el método de POST
+    if request.method == 'POST':
+        # Sacamos la descripción desde el formulario
+        name_cost = request.json['name_cost']
+        id_pro_type = request.json['id_pro_type']
+        error = None
+        # Preguntaremos si no existe una descripción
+        if not name_cost:
+            error = 'El nombre del producto es requerido.'
+        if not id_pro_type:
+            error = 'El tipo del producto es requerido.'
+        # Preguntamos si tenemos un mensaje de erro
+        if error is not None:
+            return {
+                "error": error
+            }
+        else:
+            db, c = get_db()
+            price = get_price_producto(id_pro_type)
+            c.execute(
+                'INSERT INTO Transaccion(tran_price, tran_type) VALUES (%s, %s);',
+                (price['prod_price'], 1)
+            )
+            db.commit()
+            c.execute(
+                'INSERT INTO Coste(name_cost, id_pro_type, id_tran) VALUES (%s, %s, %s);',
+                (name_cost, id_pro_type, get_transaction())
+            )
+            # Comprometemos la base de datos
+            db.commit()
+            # Redirigimos al usuario al listado de ToDos
+            return {
+                "estatus": "ok",
+                "retro": "El producto ha sido registrado exitosamente"
+            }
+    return {
+        "ruta": "/create/coste"
+    }
+
+
 @bp.route('/read/clientes')
 def read_clientes():
     db, c = get_db()
@@ -125,6 +167,16 @@ def get_price_corte(id):
     db, c = get_db()
     c.execute(
         'SELECT cut_price FROM Corte WHERE id = %s',
+        (id,)
+    )
+    price = c.fetchone()
+    return price
+
+
+def get_price_producto(id):
+    db, c = get_db()
+    c.execute(
+        'SELECT prod_price FROM Producto WHERE id = %s',
         (id,)
     )
     price = c.fetchone()
