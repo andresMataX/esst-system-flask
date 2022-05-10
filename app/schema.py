@@ -73,5 +73,11 @@ instructions = [
     'INSERT INTO Producto(prod_name, prod_price) VALUES("Plancha para rizado", 371)',
     'INSERT INTO Producto(prod_name, prod_price) VALUES("Plancha para alisado", 494)',
     'INSERT INTO Producto(prod_name, prod_price) VALUES ("Toallas para mano", 217);',
-    'INSERT INTO Corte(cut_name, cut_price) VALUES ("Caballero", 70);'
+    'INSERT INTO Corte(cut_name, cut_price) VALUES ("Caballero", 70);',
+    'INSERT INTO Corte(cut_name, cut_price) VALUES ("Infantil", 60);',
+    'INSERT INTO Corte(cut_name, cut_price) VALUES ("Dama", 90);',
+    'INSERT INTO Corte(cut_name, cut_price) VALUES ("Peinado", 100);',
+    'INSERT INTO Corte(cut_name, cut_price) VALUES ("Tinte", 500);',
+    'INSERT INTO Corte(cut_name, cut_price) VALUES ("Alaciado", 1000);',
+    'INSERT INTO Corte(cut_name, cut_price) VALUES ("Baño de color", 600);'
 ]

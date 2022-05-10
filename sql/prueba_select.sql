@@ -9,3 +9,5 @@ SELECT * from transaccion;
 SELECT * from venta WHERE date LIKE "%-06 %";
 -- Prueba de filtro por mes
 SELECT * from venta WHERE date LIKE "%-06-%";
+
+SELECT cut_price FROM Corte WHERE id = 1;
