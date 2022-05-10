@@ -103,7 +103,7 @@ def create_coste():
 def read_clientes():
     db, c = get_db()
     c.execute(
-        'SELECT v.id, v.name_cli, v.l_name_cli, v.id_cut_type, v.id_tran, v.date, c.cut_name FROM Venta v '
+        'SELECT v.id, v.name_cli, v.l_name_cli, v.id_cut_type, v.date, c.cut_name FROM Venta v '
         'JOIN Corte c ON v.id_cut_type = c.id ORDER BY v.date'
     )
     clientes = c.fetchall()
