@@ -15,7 +15,7 @@ INSERT INTO Venta(name_cli, l_name_cli, id_cut_type, id_user) VALUES ("Jesús", 
 INSERT INTO Venta(name_cli, l_name_cli, id_cut_type, id_user, date) VALUES ("Jesús", "Mata", 1, 1, "2022-06-06 15:43:29");
 
 -- Coste
-INSERT INTO Coste(name_cost, id_pro_type, id_user) VALUES ("Tinte Azul", 1, 1);
+INSERT INTO Coste(name_cost, id_pro_type, id_tran) VALUES ("Tinte Azul", 5, 2);
 
 -- Tipo de corte
 INSERT INTO Corte(cut_name, cut_price) VALUES ("Tinte Azul", 1);

@@ -65,6 +65,7 @@ def read_clientes():
         'JOIN Corte c ON v.id_cut_type = c.id ORDER BY v.date'
     )
     clientes = c.fetchall()
+    '''
     # print(clientes[0]['date'].strftime('%d-%m-%Y %I:%M%p'))
     # "id": fetch[0]['id'],
     # "name_cli": fetch[0]['name_cli'],
@@ -77,13 +78,27 @@ def read_clientes():
     # "day": clientes[0]['date'].strftime('%d'),
     # "hour": clientes[0]['date'].strftime('%I%p'),
     # "minute": clientes[0]['date'].strftime('%M')
+    '''
     return {
         "clientes": clientes
     }
 
 
+@bp.route('/read/costes')
+def read_costes():
+    db, c = get_db()
+    c.execute(
+        'SELECT c.id, c.name_cost, c.id_pro_type, c.date, p.prod_name FROM Coste c '
+        'JOIN Producto p ON c.id_pro_type = p.id ORDER BY c.date'
+    )
+    costes = c.fetchall()
+    return {
+        "costes": costes
+    }
+
+
 @bp.route('/read/cortes')
-def read_corte():
+def read_cortes():
     db, c = get_db()
     c.execute(
         'SELECT * FROM Corte;'
@@ -91,6 +106,18 @@ def read_corte():
     cortes = c.fetchall()
     return {
         "cortes": cortes
+    }
+
+
+@bp.route('/read/productos')
+def read_productos():
+    db, c = get_db()
+    c.execute(
+        'SELECT * FROM Producto;'
+    )
+    producto = c.fetchall()
+    return {
+        "producto": producto
     }
 
 
