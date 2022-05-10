@@ -194,10 +194,13 @@ def read_costes():
     if request.method == 'POST':
         name_cost = request.json['name_cost']
         c.execute(
-            'SELECT * from Coste WHERE name_cost LIKE %s;',
+            'SELECT c.id, c.name_cost, c.id_pro_type, c.date, p.prod_name, p.prod_price FROM Coste c '
+            'JOIN Producto p ON c.id_pro_type = p.id WHERE name_cost LIKE %s ORDER BY c.date desc',
             ("%"+name_cost+"%",)
         )
         filtro = c.fetchall()
+        for i in range(len(filtro)):
+            filtro[i]['date'] = filtro[i]['date'].strftime('%I:%M%p %d-%m-%Y')
         return {
             "filtro": filtro
         }
