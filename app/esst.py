@@ -1,11 +1,8 @@
-from os import error
 from flask import (
-    Blueprint, g, redirect, request, url_for, abort, session
+    Blueprint, g, redirect, request, url_for
 )
 # Abortar acciones de un usuario que no le correspondan
 from werkzeug.exceptions import abort
-# Proteger los endpoints de usuarios que no hayan ingresado a la sesión
-from app.auth import login_required
 # Importamos la base de datos
 from app.db import get_db
 
@@ -15,7 +12,7 @@ bp = Blueprint('esst', __name__)
 
 @bp.route('/create/venta', methods=['GET', 'POST'])
 # El usuario debe haber iniciado sesión
-def create():
+def create_cliente():
     # Revisar si usamos el método de POST
     if request.method == 'POST':
         # Sacamos la descripción desde el formulario
@@ -39,8 +36,8 @@ def create():
             # Podemos crear nuestro ToDo
             db, c = get_db()
             c.execute(
-                'INSERT INTO Venta(name_cli, l_name_cli, id_cut_type, id_user) VALUES (%s, %s, %s, %s);',
-                (name_cli, l_name_cli, id_cut_type, g.user['id'])
+                'INSERT INTO Venta(name_cli, l_name_cli, id_cut_type) VALUES (%s, %s, %s);',
+                (name_cli, l_name_cli, id_cut_type)
             )
             # Comprometemos la base de datos
             db.commit()

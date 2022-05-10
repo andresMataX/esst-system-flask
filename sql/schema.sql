@@ -22,10 +22,8 @@ CREATE TABLE Venta(
             name_cli VARCHAR(30) NOT NULL,
             l_name_cli VARCHAR(30) NOT NULL,
             id_cut_type INT NOT NULL,
-            id_user INT NOT NULL,
             date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY(id_cut_type) REFERENCES Corte(id),
-            FOREIGN KEY(id_user) REFERENCES Usuario(id)
+            FOREIGN KEY(id_cut_type) REFERENCES Corte(id)
         );
         
 CREATE TABLE Producto(
@@ -38,10 +36,8 @@ CREATE TABLE Coste(
 			id INT PRIMARY KEY AUTO_INCREMENT,
             name_cost VARCHAR(40) NOT NULL,
             id_pro_type INT NOT NULL,
-            id_user INT NOT NULL,
             date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY(id_pro_type) REFERENCES Producto(id),
-            FOREIGN KEY(id_user) REFERENCES Usuario(id)
+            FOREIGN KEY(id_pro_type) REFERENCES Producto(id)
         );
 
 CREATE TABLE Transaccion(

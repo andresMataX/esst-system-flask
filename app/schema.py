@@ -29,10 +29,8 @@ instructions = [
         name_cli VARCHAR(30) NOT NULL,
         l_name_cli VARCHAR(30) NOT NULL,
         id_cut_type INT NOT NULL,
-        id_user INT NOT NULL,
         date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY(id_cut_type) REFERENCES Corte(id),
-        FOREIGN KEY(id_user) REFERENCES Usuario(id)
+        FOREIGN KEY(id_cut_type) REFERENCES Corte(id)
     );
     """,
     """
@@ -47,10 +45,8 @@ instructions = [
         id INT PRIMARY KEY AUTO_INCREMENT,
         name_cost VARCHAR(40) NOT NULL,
         id_pro_type INT NOT NULL,
-        id_user INT NOT NULL,
         date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY(id_pro_type) REFERENCES Producto(id),
-        FOREIGN KEY(id_user) REFERENCES Usuario(id)
+        FOREIGN KEY(id_pro_type) REFERENCES Producto(id)
     );
     """,
     """
@@ -76,5 +72,6 @@ instructions = [
     'INSERT INTO Producto(prod_name, prod_price) VALUES("Secador de cabello", 330)',
     'INSERT INTO Producto(prod_name, prod_price) VALUES("Plancha para rizado", 371)',
     'INSERT INTO Producto(prod_name, prod_price) VALUES("Plancha para alisado", 494)',
-    'INSERT INTO Producto(prod_name, prod_price) VALUES ("Toallas para mano", 217);'
+    'INSERT INTO Producto(prod_name, prod_price) VALUES ("Toallas para mano", 217);',
+    'INSERT INTO Corte(cut_name, cut_price) VALUES ("Caballero", 70);'
 ]
