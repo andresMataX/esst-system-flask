@@ -131,7 +131,7 @@ def read_costes():
     db, c = get_db()
     c.execute(
         'SELECT c.id, c.name_cost, c.id_pro_type, c.date, p.prod_name FROM Coste c '
-        'JOIN Producto p ON c.id_pro_type = p.id ORDER BY c.date'
+        'JOIN Producto p ON c.id_pro_type = p.id ORDER BY c.date desc'
     )
     costes = c.fetchall()
     return {
