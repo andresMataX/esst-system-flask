@@ -82,6 +82,18 @@ def read_clientes():
     }
 
 
+@bp.route('/read/cortes')
+def read_corte():
+    db, c = get_db()
+    c.execute(
+        'SELECT * FROM Corte;'
+    )
+    cortes = c.fetchall()
+    return {
+        "cortes": cortes
+    }
+
+
 def get_price_corte(id):
     db, c = get_db()
     c.execute(
