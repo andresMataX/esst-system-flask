@@ -61,23 +61,23 @@ def create_cliente():
 def read_clientes():
     db, c = get_db()
     c.execute(
-        'SELECT * FROM Venta'
+        'SELECT v.id, v.name_cli, v.l_name_cli, v.id_cut_type, v.id_tran, v.date, c.cut_name FROM Venta v '
+        'JOIN Corte c ON v.id_cut_type = c.id ORDER BY v.date'
     )
     clientes = c.fetchall()
     # print(clientes[0]['date'].strftime('%d-%m-%Y %I:%M%p'))
-    print(clientes[0]['date'].strftime('%m'))
     return {
         "id": clientes[0]['id'],
         "name_cli": clientes[0]['name_cli'],
         "l_name_cli": clientes[0]['l_name_cli'],
-        "id_cut_type": clientes[0]['id_cut_type'],
+        "cut_name": clientes[0]['cut_name'],
         "id_tran": clientes[0]['id_tran'],
-        "date": clientes[0]['date'].strftime('%I:%M%p %d-%m-%Y'),
-        "year": clientes[0]['date'].strftime('%Y'),
-        "month": clientes[0]['date'].strftime('%m'),
-        "day": clientes[0]['date'].strftime('%d'),
-        "hour": clientes[0]['date'].strftime('%I%p'),
-        "minute": clientes[0]['date'].strftime('%M')
+        "date": clientes[0]['date'].strftime('%I:%M%p %d-%m-%Y')
+        # "year": clientes[0]['date'].strftime('%Y'),
+        # "month": clientes[0]['date'].strftime('%m'),
+        # "day": clientes[0]['date'].strftime('%d'),
+        # "hour": clientes[0]['date'].strftime('%I%p'),
+        # "minute": clientes[0]['date'].strftime('%M')
     }
 
 
