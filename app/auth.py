@@ -30,7 +30,7 @@ def register():
         else:
             c.execute(
                 # Buscamos el ID del usuario que ha sido ingresado
-                'SELECT id FROM usuario WHERE user = %s', (username,)
+                'SELECT id FROM Usuario WHERE user = %s', (username,)
             )
 
         # Validamos que se haya ingresado una contraseña
@@ -44,7 +44,7 @@ def register():
         if error is None:
             # Registramos al usuario con su contraseña
             c.execute(
-                'INSERT INTO usuario(user, pass) VALUES (%s, %s)',
+                'INSERT INTO Usuario(user, pass) VALUES (%s, %s)',
                 # Encriptamos la contraseña
                 (username, generate_password_hash(password))
             )
@@ -77,7 +77,7 @@ def login():
         error = None
         # Buscamos al usuario y contraseña
         c.execute(
-            'SELECT * FROM usuario WHERE user = %s', (username,)
+            'SELECT * FROM Usuario WHERE user = %s', (username,)
         )
         # Obtenemos el primer y único resultado obtenido
         user = c.fetchone()
