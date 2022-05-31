@@ -3,8 +3,8 @@ Sistema CRUD utilizado por el proyecto esst-system-js que sirve como REST API pa
 
 - Logout
 
-
 - Login
+
 ![image](https://user-images.githubusercontent.com/89869980/171072242-6541e7fa-c9aa-4973-ac08-05bb0746e728.png)
 
 - Leer Ventas
