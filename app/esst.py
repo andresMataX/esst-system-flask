@@ -275,7 +275,7 @@ def get_price_producto(id):
 def get_transaction():
     db, c = get_db()
     c.execute(
-        'SELECT MAX(id) AS id FROM transaccion;'
+        'SELECT MAX(id) AS id FROM Transaccion;'
     )
     ids = c.fetchone()
     return ids['id']
